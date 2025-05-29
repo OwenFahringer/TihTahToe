@@ -13,9 +13,11 @@ class smallBoard: ObservableObject {
     @Published var isWon: Bool = false
     @Published var winner: String = ""
     
-    func addFilledTile(row: Int, col: Int, tile: String) {
-        board[row][col] = tile
-        
+    func addFilledTile(row: Int, col: Int, tile: String) { //set tile on board to correct
+        //if we want vfx this should be done inside of the view
+        if(board[row][col] == ""){
+            board[row][col] = tile
+        }
     }
     func didWin(row: Int, col: Int, tile: String) -> String{ //figures out if the large tile is won returns player who won tile
         if(

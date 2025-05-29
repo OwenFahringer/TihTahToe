@@ -9,7 +9,7 @@ import SwiftUI
 
 class GameStateManager: ObservableObject {
     @Published var largeBoard: [[smallBoard]] = Array(repeating: Array(repeating: smallBoard(), count: 3), count: 3)
-    @Published var turn: Bool = false //false is x, true is o
+    @Published var turn: String = "x"
     @Published var gameWon: String = ""
     
     func nextActive(row: Int, col: Int){ //finds the next active big tile
@@ -30,7 +30,7 @@ class GameStateManager: ObservableObject {
             largeBoard[row][col].isActive = true
         }
     }
-        func didLargeWin(row: Int, col: Int, tile: String) -> Bool{ //figures out if the large tile is won returns player who won tile
+        func didLargeWin(row: Int, col: Int, tile: String) -> Bool{ //returns true if game should end winner stored in gameWon
             if (
                 (largeBoard[row][0].winner == tile && largeBoard[row][1].winner == tile && largeBoard[row][2].winner == tile) || // row
                 (largeBoard[0][col].winner == tile && largeBoard[1][col].winner == tile && largeBoard[2][col].winner == tile) || // column
@@ -43,5 +43,14 @@ class GameStateManager: ObservableObject {
             else{
                 return false
         }
+    }
+    func doNextTurn(){
+        //call funcs before going next turn, implement one at a time to test for readiness
+        if(turn == "x"){
+            turn = "o"
+        } else {
+            turn = "x"
+        }
+//        turn == "x" ? turn = "o" : turn = "x"
     }
 }
