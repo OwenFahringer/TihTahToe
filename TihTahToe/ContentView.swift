@@ -9,7 +9,8 @@ import SwiftUI
 
 struct Popup: View{
     @State private var showBoard = false
-    
+    @EnvironmentObject var gsm: GameStateManager
+
     var body: some View {
         ZStack {
             Color.blue.opacity(0.1).ignoresSafeArea()
@@ -48,12 +49,14 @@ struct Popup: View{
     }
 }
 struct BigBoardView: View {
+    @EnvironmentObject var gsm: GameStateManager
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 3) {
             ForEach(0..<3) { _ in
-                HStack(spacing: 8) {
+                HStack(spacing: 3) {
                     ForEach(0..<3) { _ in
                         SmallBoardGrid()
+                            .padding(10)
                     }
                 }
             }
@@ -64,31 +67,27 @@ struct BigBoardView: View {
 }
 
 struct SmallBoardGrid: View {
+    @EnvironmentObject var gsm: GameStateManager
     var body: some View {
-        GeometryReader { geo in
-            let size = min(geo.size.width, geo.size.height)
-            let cellSize = size / 3
-
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.black, lineWidth: 2)
-
-                ForEach(1..<3) { i in
-                    Rectangle()
-                        .fill(Color.black)
-                        .frame(width: 1, height: size)
-                        .position(x: CGFloat(i) * cellSize, y: size / 2)
-                }
-
-                ForEach(1..<3) { i in
-                    Rectangle()
-                        .fill(Color.black)
-                        .frame(width: size, height: 1)
-                        .position(x: size / 2, y: CGFloat(i) * cellSize)
+        Button{
+            print("hi")
+        } label : {
+            VStack{
+                ForEach(0..<3) { i in
+                    HStack{
+                        ForEach(0..<3) { j in
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(lineWidth: 1.5)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.black)
+                                .shadow(radius: 5)
+                        }
+                    }
                 }
             }
+            .padding([.horizontal], 5)
+            .padding([.vertical], 10)
         }
-        .aspectRatio(1, contentMode: .fit)
     }
 }
 
