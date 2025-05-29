@@ -7,7 +7,47 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct Popup: View{
+    @State private var showBoard = false
+    
+    var body: some View {
+        ZStack {
+            Color.blue.opacity(0.1).ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                Button("Play Tic-Tac-Toe") {
+                    withAnimation(.spring()) {
+                        showBoard = true
+                    }
+                }
+                .padding()
+            }
+            
+            if showBoard {
+                // Dimmed background
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        withAnimation {
+                            showBoard = false
+                        }
+                    }
+                
+                // The popup board
+                SmallBoardGrid()
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(16)
+                    .shadow(radius: 10)
+                    .frame(maxWidth: 300)
+                    .transition(.move(edge: .bottom))
+                    .zIndex(1)
+            }
+        }
+    }
+}
+struct BigBoardView: View {
     var body: some View {
         VStack(spacing: 8) {
             ForEach(0..<3) { _ in
@@ -54,5 +94,5 @@ struct SmallBoardGrid: View {
 
 
 #Preview {
-    ContentView()
+    BigBoardView()
 }

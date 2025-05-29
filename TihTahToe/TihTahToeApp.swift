@@ -11,7 +11,7 @@ import SwiftUI
 struct TihTahToeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            BigBoardView()
         }
     }
 }
