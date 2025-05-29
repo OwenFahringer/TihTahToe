@@ -29,6 +29,7 @@ class GameStateManager: ObservableObject {
         }else{
             largeBoard[row][col].isActive = true
         }
+    }
         func didLargeWin(row: Int, col: Int, tile: String) -> Bool{ //figures out if the large tile is won returns player who won tile
             if (
                 (largeBoard[row][0].winner == tile && largeBoard[row][1].winner == tile && largeBoard[row][2].winner == tile) || // row
@@ -41,8 +42,6 @@ class GameStateManager: ObservableObject {
             }
             else{
                 return false
-            }
         }
-
     }
 }
