@@ -13,6 +13,7 @@ struct TihTahToeApp: App {
     var body: some Scene {
         WindowGroup {
             BigBoardView()
+                .environmentObject(gsm)
         }
     }
 }
