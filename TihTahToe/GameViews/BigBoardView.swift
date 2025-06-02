@@ -39,7 +39,7 @@ struct BigBoardView: View {
                                     }
                                 }
                             }
-                            .disabled(gsm.largeBoard[i][j].isWon)
+                            .disabled(gsm.largeBoard[i][j].isWon || !gsm.largeBoard[i][j].isActive)
                         }
                     }
                 }

@@ -71,7 +71,6 @@ struct CellButton: View { //makes button because swift flips out with too much c
         let isDisabled = gsm.largeBoard[bigBoardRow][bigBoardCol].board[i][j] != ""
 
         return Button {
-            gsm.largeBoard[bigBoardRow][bigBoardCol].addFilledTile(row: i, col: j, tile: gsm.turn)
             gsm.largeBoard[bigBoardRow][bigBoardCol].didWin(row: i, col: j, tile: gsm.turn)
             gsm.nextActive(row: i, col: j)
             gsm.doNextTurn()
