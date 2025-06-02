@@ -12,41 +12,43 @@ struct BigBoardView: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: 3) {
-                ForEach(0..<3) { i in
-                    HStack(spacing: 3) {
-                        ForEach(0..<3) { j in
-                            Button {
-                                print(gsm.largeBoard[i][j].board)
-                                withAnimation(.easeOut) {
-                                    selectedCell = (i, j)
-                                }
-                            } label: {
-                                ZStack{
-                                    SmallBoardView(bigBoardRow: i, bigBoardCol: j)
-                                        .padding(1)
-                                        .shadow(color: gsm.largeBoard[i][j].isActive ? .black :.white, radius: 2)
-                                    if(gsm.largeBoard[i][j].winner == "x"){
-                                        Image(systemName: "xmark.square")
-                                            .resizable()
-                                            .frame(width: 90, height: 90)
-                                            .foregroundStyle(.red)
-                                    } else if(gsm.largeBoard[i][j].winner == "o"){
-                                        Image(systemName: "circle.square")
-                                            .resizable()
-                                            .frame(width: 90, height: 90)
-                                            .foregroundStyle(.blue)
+            VStack{
+                VStack(spacing: 3) {
+                    
+                    ForEach(0..<3) { i in
+                        HStack(spacing: 3) {
+                            ForEach(0..<3) { j in
+                                Button {
+                                    
+                                    withAnimation(.easeOut) {
+                                        selectedCell = (i, j)
+                                    }
+                                } label: {
+                                    ZStack{
+                                        SmallBoardView(bigBoardRow: i, bigBoardCol: j)
+                                            .padding(1)
+                                            .shadow(color: gsm.largeBoard[i][j].isActive ? .black :.white, radius: 2)
+                                        if(gsm.largeBoard[i][j].winner == "x"){
+                                            Image(systemName: "xmark.square")
+                                                .resizable()
+                                                .frame(width: 90, height: 90)
+                                                .foregroundStyle(.red)
+                                        } else if(gsm.largeBoard[i][j].winner == "o"){
+                                            Image(systemName: "circle.square")
+                                                .resizable()
+                                                .frame(width: 90, height: 90)
+                                                .foregroundStyle(.blue)
+                                        }
                                     }
                                 }
+                                .disabled(gsm.largeBoard[i][j].isWon || !gsm.largeBoard[i][j].isActive)
                             }
-                            .disabled(gsm.largeBoard[i][j].isWon || !gsm.largeBoard[i][j].isActive)
                         }
                     }
                 }
             }
 
             if let cell = selectedCell {
-                // Dim background
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
                     .onTapGesture {
@@ -55,7 +57,7 @@ struct BigBoardView: View {
                         }
                     }
 
-                // Custom popup view
+                // this the popup view
                 CustomPopupView(bigBoardRow: cell.row, bigBoardCol: cell.col) {
                     withAnimation {
                         selectedCell = nil

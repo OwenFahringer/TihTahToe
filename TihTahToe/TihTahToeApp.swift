@@ -12,7 +12,7 @@ struct TihTahToeApp: App {
     @StateObject var gsm: GameStateManager = GameStateManager()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            OpeningView()
                 .environmentObject(gsm)
         }
     }
