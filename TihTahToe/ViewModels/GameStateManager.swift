@@ -7,12 +7,15 @@
 
 import SwiftUI
 
+@MainActor
 class GameStateManager: ObservableObject {
-    @Published var largeBoard: [[smallBoard]] = Array(repeating: Array(repeating: smallBoard(), count: 3), count: 3)
+    @Published var largeBoard: [[smallBoard]] = (0..<3).map { _ in
+    (0..<3).map { _ in smallBoard() }
+}
     @Published var turn: String = "x"
     @Published var gameWon: String = ""
     
-    func nextActive(row: Int, col: Int){ //finds the next active big tile
+    func nextActive(row: Int, col: Int){ //finds the next active big tile, requires row and col from small board
         for i in largeBoard.indices{
             for j in largeBoard[i].indices{
                 largeBoard[i][j].isActive = false

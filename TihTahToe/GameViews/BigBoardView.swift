@@ -4,7 +4,6 @@
 //
 //  Created by Owen F on 5/30/25.
 //
-
 import SwiftUI
 
 struct BigBoardView: View {
@@ -18,13 +17,29 @@ struct BigBoardView: View {
                     HStack(spacing: 3) {
                         ForEach(0..<3) { j in
                             Button {
-                                withAnimation(.spring()) {
+                                print(gsm.largeBoard[i][j].board)
+                                withAnimation(.easeOut) {
                                     selectedCell = (i, j)
                                 }
                             } label: {
-                                SmallBoardView(bigBoardRow: i, bigBoardCol: j)
-                                    .padding(1)
+                                ZStack{
+                                    SmallBoardView(bigBoardRow: i, bigBoardCol: j)
+                                        .padding(1)
+                                        .shadow(color: gsm.largeBoard[i][j].isActive ? .black :.white, radius: 2)
+                                    if(gsm.largeBoard[i][j].winner == "x"){
+                                        Image(systemName: "xmark.square")
+                                            .resizable()
+                                            .frame(width: 90, height: 90)
+                                            .foregroundStyle(.red)
+                                    } else if(gsm.largeBoard[i][j].winner == "o"){
+                                        Image(systemName: "circle.square")
+                                            .resizable()
+                                            .frame(width: 90, height: 90)
+                                            .foregroundStyle(.blue)
+                                    }
+                                }
                             }
+                            .disabled(gsm.largeBoard[i][j].isWon)
                         }
                     }
                 }
@@ -60,6 +75,6 @@ struct BigBoardView: View {
 }
 
 #Preview{
-    BigBoardView()
+    ContentView()
         .environmentObject(GameStateManager())
 }

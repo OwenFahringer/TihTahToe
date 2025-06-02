@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomPopupView: View {
     let bigBoardRow: Int
     let bigBoardCol: Int
-    let onClose: () -> Void
+    @State var onClose: () -> Void
     @EnvironmentObject var gsm: GameStateManager
 
     var body: some View {
@@ -18,7 +18,7 @@ struct CustomPopupView: View {
             Text("Cell (\(bigBoardRow), \(bigBoardCol))")
                 .font(.headline)
 
-            SmallBoardPopupView(bigBoardRow: bigBoardRow, bigBoardCol: bigBoardCol)
+            SmallBoardPopupView(bigBoardRow: bigBoardRow, bigBoardCol: bigBoardCol, onClose: $onClose)
 
             Button("Close") {
                 onClose()
@@ -33,11 +33,12 @@ struct CustomPopupView: View {
     }
 }
 
-struct SmallBoardPopupView: View {
+struct SmallBoardPopupView: View { //This is different from SmallBoardView
     @EnvironmentObject var gsm: GameStateManager
     let bigBoardRow: Int
     let bigBoardCol: Int
-
+    @Binding var onClose: () -> Void
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5)
@@ -47,7 +48,7 @@ struct SmallBoardPopupView: View {
                 ForEach(0..<3, id: \.self) { i in
                 HStack(spacing: 4) {
                     ForEach(0..<3, id: \.self) { j in
-                        CellButton(i: i, j: j, bigBoardRow: bigBoardRow, bigBoardCol: bigBoardCol)
+                        CellButton(i: i, j: j, bigBoardRow: bigBoardRow, bigBoardCol: bigBoardCol, onClose: $onClose)
                     }
                 }
             }
@@ -57,25 +58,34 @@ struct SmallBoardPopupView: View {
         .padding(5)
     }
 }
-struct CellButton: View {
+struct CellButton: View { //makes button because swift flips out with too much code in one View
     @EnvironmentObject var gsm: GameStateManager
     let i: Int
     let j: Int
     let bigBoardRow: Int
     let bigBoardCol: Int
-
+    @Binding var onClose: () -> Void
+    
     var body: some View {
         let symbol = gsm.largeBoard[bigBoardRow][bigBoardCol].board[i][j]
-        let isDisabled = symbol != ""
+        let isDisabled = gsm.largeBoard[bigBoardRow][bigBoardCol].board[i][j] != ""
 
         return Button {
-            gsm.largeBoard[bigBoardRow][bigBoardCol].board[i][j] = gsm.turn
+            gsm.largeBoard[bigBoardRow][bigBoardCol].addFilledTile(row: i, col: j, tile: gsm.turn)
+            gsm.largeBoard[bigBoardRow][bigBoardCol].didWin(row: i, col: j, tile: gsm.turn)
+            gsm.nextActive(row: i, col: j)
+            gsm.doNextTurn()
+            onClose()
         } label: {
             ZStack {
                 if symbol == "x" {
                     Image(systemName: "xmark.square")
+                        .foregroundStyle(.red)
+                        .frame(width:30, height: 30)
                 } else if symbol == "o" {
-                    Image(systemName: "circle")
+                    Image(systemName: "circle.square")
+                        .foregroundStyle(.blue)
+                        .frame(width:30, height: 30)
                 }
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(lineWidth: 1.5)
@@ -85,4 +95,8 @@ struct CellButton: View {
         }
         .disabled(isDisabled)
     }
+}
+
+#Preview{
+    ContentView().environmentObject(GameStateManager())
 }
