@@ -33,7 +33,7 @@ class GameStateManager: ObservableObject {
             largeBoard[row][col].isActive = true
         }
     }
-        func didLargeWin(row: Int, col: Int, tile: String) -> Bool{ //returns true if game should end winner stored in gameWon
+        func didLargeWin(row: Int, col: Int, tile: String){ //returns true if game should end winner stored in gameWon
             if (
                 (largeBoard[row][0].winner == tile && largeBoard[row][1].winner == tile && largeBoard[row][2].winner == tile) || // row
                 (largeBoard[0][col].winner == tile && largeBoard[1][col].winner == tile && largeBoard[2][col].winner == tile) || // column
@@ -41,12 +41,8 @@ class GameStateManager: ObservableObject {
                 (largeBoard[2][0].winner == tile && largeBoard[1][1].winner == tile && largeBoard[0][2].winner == tile) // bottom left to top right diagonal
             ){
                 gameWon = tile
-                return true
             }
-            else{
-                return false
         }
-    }
     func doNextTurn(){
         //call funcs before going next turn, implement one at a time to test for readiness
         if(turn == "x"){
