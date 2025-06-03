@@ -50,6 +50,19 @@ class GameStateManager: ObservableObject {
         } else {
             turn = "x"
         }
-//        turn == "x" ? turn = "o" : turn = "x"
+    }
+    func resetBoard(){
+        for largeRow in 0..<3{
+            for largeCol in 0..<3{
+                largeBoard[largeRow][largeCol].isActive = true
+                largeBoard[largeRow][largeCol].isWon = false
+                largeBoard[largeRow][largeCol].winner = ""
+                for smallRow in 0..<3{
+                    for smallCol in 0..<3{
+                        largeBoard[largeRow][largeCol].board[smallRow][smallCol] = ""
+                    }
+                }
+            }
+        }
     }
 }
