@@ -73,6 +73,7 @@ struct CellButton: View { //makes button because swift flips out with too much c
         return Button {
             gsm.largeBoard[bigBoardRow][bigBoardCol].addFilledTile(row: i, col: j, tile: gsm.turn)
             gsm.largeBoard[bigBoardRow][bigBoardCol].didWin(row: i, col: j, tile: gsm.turn)
+            gsm.didLargeWin(row: bigBoardRow, col: bigBoardCol, tile: gsm.turn)
             gsm.nextActive(row: i, col: j)
             gsm.doNextTurn()
             onClose()
