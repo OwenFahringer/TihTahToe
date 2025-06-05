@@ -18,6 +18,7 @@ struct CustomPopupView: View {
         VStack(spacing: 20) {
             Text("Cell (\(bigBoardRow), \(bigBoardCol))")
                 .font(.headline)
+                .foregroundStyle(.black)
 
             SmallBoardPopupView(bigBoardRow: bigBoardRow, bigBoardCol: bigBoardCol, onClose: $onClose)
 

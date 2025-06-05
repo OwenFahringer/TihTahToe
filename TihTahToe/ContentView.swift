@@ -13,6 +13,21 @@ struct ContentView: View{
     @EnvironmentObject var gsm: GameStateManager
     var body: some View{
         VStack{
+            HStack{
+                if(gsm.turn == "x"){
+                    Image(systemName: "xmark.square")
+                        .foregroundStyle(.red)
+                        .frame(width:30, height: 30)
+                        .padding(0)
+                    Text("to move")
+                }else if(gsm.turn == "o"){
+                    Image(systemName: "circle.square")
+                        .foregroundStyle(.blue)
+                        .frame(width:30, height: 30)
+                        .padding(0)
+                    Text("to move")
+                }
+            }
             BigBoardView()
             Button{ //Add confirmation
                 gsm.resetBoard()

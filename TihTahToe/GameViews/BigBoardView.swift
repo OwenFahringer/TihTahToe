@@ -26,7 +26,7 @@ struct BigBoardView: View {
                     .foregroundStyle(colorScheme == .dark ? .black : .white)
                     .opacity(0.8)
                     .zIndex(1)
-                Text("\(gsm.gameWon) has won the game")
+                Text("\(gsm.gameWon.capitalized) has won the game")
                     .font(.system(size: 50))
                     .foregroundStyle(colorScheme == .dark ? .white : .black)
                     .zIndex(1)
@@ -46,7 +46,8 @@ struct BigBoardView: View {
                                     ZStack{
                                         SmallBoardView(bigBoardRow: i, bigBoardCol: j)
                                             .padding(1)
-                                            .shadow(color:gsm.largeBoard[i][j].isActive ? (colorScheme == .dark ? .white : .black) : .clear, radius: 3)
+                                        //shadow for each smallBoard
+                                            .shadow(color: gsm.largeBoard[i][j].isActive ? .custYellow : .clear, radius: 3)
                                         if(gsm.largeBoard[i][j].winner == "x"){
                                             Image(systemName: "xmark.square")
                                                 .resizable()
