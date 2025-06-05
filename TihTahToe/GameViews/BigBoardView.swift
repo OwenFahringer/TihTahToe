@@ -4,6 +4,7 @@
 //
 //  Created by Owen F on 5/30/25.
 //
+
 import SwiftUI
 
 @MainActor
@@ -15,9 +16,6 @@ struct BigBoardView: View {
     var body: some View {
         ZStack {
             if(!gsm.gameWon.isEmpty){
-                Text("\(gsm.gameWon) has won the game")
-                    .font(.system(size: 50))
-                    .foregroundStyle(colorScheme == .dark ? .white : .black)
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(lineWidth: 10)
                     .frame(width: 380, height: 380)
@@ -25,7 +23,12 @@ struct BigBoardView: View {
                     .zIndex(1)
                 RoundedRectangle(cornerRadius: 15)
                     .frame(width: 380, height: 380)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(colorScheme == .dark ? .black : .white)
+                    .opacity(0.8)
+                    .zIndex(1)
+                Text("\(gsm.gameWon) has won the game")
+                    .font(.system(size: 50))
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
                     .zIndex(1)
             }
             VStack{
@@ -43,7 +46,7 @@ struct BigBoardView: View {
                                     ZStack{
                                         SmallBoardView(bigBoardRow: i, bigBoardCol: j)
                                             .padding(1)
-                                            .shadow(color: gsm.largeBoard[i][j].isActive ? .black :.white, radius: 2)
+                                            .shadow(color:gsm.largeBoard[i][j].isActive ? (colorScheme == .dark ? .white : .black) : .clear, radius: 3)
                                         if(gsm.largeBoard[i][j].winner == "x"){
                                             Image(systemName: "xmark.square")
                                                 .resizable()
