@@ -6,12 +6,28 @@
 //
 import SwiftUI
 
+@MainActor
 struct BigBoardView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var gsm: GameStateManager
     @State private var selectedCell: (row: Int, col: Int)? = nil
 
     var body: some View {
         ZStack {
+            if(!gsm.gameWon.isEmpty){
+                Text("\(gsm.gameWon) has won the game")
+                    .font(.system(size: 50))
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(lineWidth: 10)
+                    .frame(width: 380, height: 380)
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
+                    .zIndex(1)
+                RoundedRectangle(cornerRadius: 15)
+                    .frame(width: 380, height: 380)
+                    .foregroundStyle(.gray)
+                    .zIndex(1)
+            }
             VStack{
                 VStack(spacing: 3) {
                     
@@ -70,8 +86,8 @@ struct BigBoardView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .foregroundStyle(.black)
                 .frame(width: 360, height: 360)
+                .foregroundStyle(colorScheme == .dark ? .white : .black)
         )
     }
 }

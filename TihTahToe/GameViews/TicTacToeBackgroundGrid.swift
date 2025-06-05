@@ -16,7 +16,7 @@ struct TicTacToeBackgroundGrid: View {
                 ForEach(0..<3) { _ in
             ZStack {
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.white.opacity(0.05), lineWidth: 2)
+                        .stroke(Color.white.opacity(0.1), lineWidth: 2)
                         .frame(width: 80, height: 80)
                             
 
@@ -25,12 +25,12 @@ struct TicTacToeBackgroundGrid: View {
                         Image(systemName: "xmark")
                                     .resizable()
                                     .frame(width: 30, height: 30)
-                                    .foregroundStyle(.red.opacity(0.1))
+                                    .foregroundStyle(.red.opacity(0.15))
                 } else {
                             Image(systemName: "circle")
                                     .resizable()
                                     .frame(width: 30, height: 30)
-                                    .foregroundStyle(.blue.opacity(0.1))
+                                    .foregroundStyle(.blue.opacity(0.15))
                             }
                         }
                     }
@@ -43,4 +43,9 @@ struct TicTacToeBackgroundGrid: View {
         .scaleEffect(1.4)
         .offset(y: -50)
     }
+}
+
+#Preview {
+    OpeningView()
+        .environmentObject(GameStateManager())
 }

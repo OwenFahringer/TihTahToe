@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SmallBoardView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var gsm: GameStateManager
     let bigBoardRow: Int
     let bigBoardCol: Int
@@ -16,7 +17,7 @@ struct SmallBoardView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 5)
                 .frame(width: 110, height:110)
-                .foregroundStyle(.white)
+                .foregroundStyle(colorScheme == .dark ? .black : .white)
 
             VStack {
                 ForEach(0..<3) { i in
@@ -38,8 +39,8 @@ struct SmallBoardView: View {
                                 RoundedRectangle(cornerRadius: 5)
                                     .stroke(lineWidth: 1.5)
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(.black)
-                                    .shadow(color: .white, radius: 2)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
+                                    .shadow(color: .gray, radius: 2)
                             }
                         }
                     }

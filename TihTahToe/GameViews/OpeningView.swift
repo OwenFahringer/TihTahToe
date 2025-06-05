@@ -67,11 +67,13 @@ struct OpeningView: View {
             .transition(.scale)
         }
         .fullScreenCover(isPresented: $showGame) {
-            BigBoardView()
+            ContentView()
                 .environmentObject(gsm)
         }
         .sheet(isPresented: $showHelp) {
-            Text("No help for you ")        }
+            Text("Ultimate Tic-Tac-Toe combines nine standard Tic-Tac-Toe boards into a larger 3x3 grid. The first player chooses a small board and marks a space. Subsequent players are then forced to play in the small board corresponding to the location of their opponent's previous move. The first player to win three small boards in a row on the large grid wins the game. ")
+                .padding()
+        }
     }
 }
 
